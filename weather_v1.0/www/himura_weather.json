@@ -1,0 +1,43 @@
+<?php 
+
+$mysqli = new mysqli('localhost', 'user', 'user');
+if ($mysqli->connect_errno) {
+    echo "Не удалось подключиться: " + $mysqli->connect_error;
+    exit();
+}
+$mysqli->select_db("himura_weather");
+$query = "SELECT UNIX_TIMESTAMP(Timestamp), Temp, Pressure FROM tp ORDER BY Timestamp DESC";
+
+if (isset($_GET['limit'])){
+	$query .= " LIMIT ?";
+	$stmt = $mysqli->prepare($query);
+	$stmt->bind_param("d", $_GET['limit']);
+}
+else{
+	$stmt = $mysqli->prepare($query);
+}
+
+if ($stmt->execute()) {
+	$stmt->bind_result($Timestamp, $Temp, $Pressure);
+	echo "{\"weather\": [\n";
+	$first_elem = true;
+	
+	while($stmt->fetch()){
+		if (!$first_elem) echo ",";
+		else $first_elem = false;
+		echo "{\n";
+		echo "\"Timestamp\": ". $Timestamp . ",\n";
+		echo "\"Temp\": " . $Temp / 10 . ",\n";
+		echo "\"Pressure\": " . ($Pressure + 101325) / 100 . "\n";
+		echo "}";
+	}
+	echo "]}";
+    $stmt->close();
+}
+else{
+	echo $mysqli->error;
+}
+
+$mysqli->close();
+
+?>
