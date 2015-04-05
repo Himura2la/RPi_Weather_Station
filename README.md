@@ -1,4 +1,5 @@
-# The online weather station based on Raspberry Pi
+# Raspberry Pi Weather Station
+The online weather station based on Raspberry Pi
 
 ## Version 1.0
 Was working for about three months. It has had only one sensor BMP085 which were collecting pressure and temperature to the MySQL database. 
