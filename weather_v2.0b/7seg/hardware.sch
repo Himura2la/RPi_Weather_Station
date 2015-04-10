@@ -1,0 +1,237 @@
+EESchema Schematic File Version 2  date 11.04.2015 0:15:07
+LIBS:analog_IC
+LIBS:digital_IC
+LIBS:mixture
+LIBS:power
+EELAYER 27 0
+EELAYER END
+$Descr A4 8268 11693 portrait
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "10 apr 2015"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L HG_LED_7SEG_2_2 HG1
+U 1 1 55282D91
+P 4450 2400
+F 0 "HG1" H 4850 3350 60  0000 C CNN
+F 1 "E20561-G-O-0-W" H 4850 1400 60  0000 C CNN
+F 2 "" H 4450 2400 60  0000 C CNN
+F 3 "" H 4450 2400 60  0000 C CNN
+	1    4450 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74_595 DD2
+U 1 1 55282E39
+P 6500 1600
+F 0 "DD2" H 7000 1750 60  0000 C CNN
+F 1 "74HC595" H 7000 50  60  0000 C CNN
+F 2 "" H 6500 1600 60  0000 C CNN
+F 3 "" H 6500 1600 60  0000 C CNN
+	1    6500 1600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L R_RES R1
+U 1 1 55283383
+P 3650 3300
+F 0 "R1" H 3500 3425 60  0000 C CNN
+F 1 "220" H 3750 3425 60  0000 C CNN
+F 2 "" H 3650 3300 60  0000 C CNN
+F 3 "" H 3650 3300 60  0000 C CNN
+	1    3650 3300
+	1    0    0    1   
+$EndComp
+$Comp
+L R_RES R2
+U 1 1 552833B9
+P 6000 3300
+F 0 "R2" H 5850 3425 60  0000 C CNN
+F 1 "200" H 6100 3425 60  0000 C CNN
+F 2 "" H 6000 3300 60  0000 C CNN
+F 3 "" H 6000 3300 60  0000 C CNN
+	1    6000 3300
+	1    0    0    1   
+$EndComp
+Entry Wire Line
+	6650 2000 6750 1900
+Entry Wire Line
+	6650 1800 6750 1700
+Entry Wire Line
+	6650 1600 6750 1500
+$Comp
+L 74_595 DD1
+U 1 1 55282DC3
+P 3150 1600
+F 0 "DD1" H 3650 1750 60  0000 C CNN
+F 1 "74HC595" H 3650 50  60  0000 C CNN
+F 2 "" H 3150 1600 60  0000 C CNN
+F 3 "" H 3150 1600 60  0000 C CNN
+	1    3150 1600
+	1    0    0    -1  
+$EndComp
+Entry Wire Line
+	2850 1700 2950 1800
+Entry Wire Line
+	2850 1900 2950 2000
+Text Label 6500 2000 0    60   ~ 0
+ST
+Text Label 3000 1800 0    60   ~ 0
+SH
+Text Label 6500 1800 0    60   ~ 0
+SH
+Text Label 3000 2000 0    60   ~ 0
+ST
+Text Label 6550 1600 0    60   ~ 0
+L
+Text Label 3050 2600 0    60   ~ 0
+L
+Wire Wire Line
+	4150 1600 4450 1600
+Wire Wire Line
+	4150 1800 4450 1800
+Wire Wire Line
+	4150 2000 4450 2000
+Wire Wire Line
+	4150 2200 4450 2200
+Wire Wire Line
+	4150 2400 4450 2400
+Wire Wire Line
+	4150 2600 4450 2600
+Wire Wire Line
+	4150 2800 4450 2800
+Wire Wire Line
+	4150 3000 4450 3000
+Wire Wire Line
+	5250 1600 5500 1600
+Wire Wire Line
+	5250 1800 5500 1800
+Wire Wire Line
+	5250 2000 5500 2000
+Wire Wire Line
+	5500 2200 5250 2200
+Wire Wire Line
+	5250 2400 5500 2400
+Wire Wire Line
+	5500 2600 5250 2600
+Wire Wire Line
+	5250 2800 5500 2800
+Wire Wire Line
+	5500 3000 5250 3000
+Wire Wire Line
+	3000 2200 3000 3550
+Wire Wire Line
+	2400 3300 3400 3300
+Wire Wire Line
+	3900 3300 4200 3300
+Wire Wire Line
+	4200 3300 4200 3200
+Wire Wire Line
+	4200 3200 4450 3200
+Wire Wire Line
+	5750 3300 5550 3300
+Wire Wire Line
+	5550 3300 5550 3200
+Wire Wire Line
+	5550 3200 5250 3200
+Wire Wire Line
+	6650 3300 6250 3300
+Wire Wire Line
+	6650 2200 6650 3550
+Wire Wire Line
+	6650 3550 3000 3550
+Connection ~ 3000 3300
+Connection ~ 6650 3300
+Wire Wire Line
+	3000 2800 3150 2800
+Wire Wire Line
+	6650 2800 6500 2800
+Wire Wire Line
+	6500 3000 6750 3000
+Wire Wire Line
+	6500 2400 6750 2400
+Connection ~ 6750 3000
+Wire Wire Line
+	3150 2400 2750 2400
+Wire Wire Line
+	2750 2400 2750 3650
+Wire Wire Line
+	6750 2400 6750 3650
+Wire Wire Line
+	2950 2600 3150 2600
+Wire Wire Line
+	2650 2000 3150 2000
+Wire Wire Line
+	6500 1600 6650 1600
+Wire Wire Line
+	6500 1800 6650 1800
+Wire Wire Line
+	6650 2000 6500 2000
+Wire Bus Line
+	2850 1350 6750 1350
+Wire Bus Line
+	6750 1350 6750 1900
+Wire Wire Line
+	6500 2200 6650 2200
+Connection ~ 6650 2800
+Wire Wire Line
+	6750 3650 2750 3650
+Wire Wire Line
+	3150 1600 2450 1600
+Wire Wire Line
+	2550 1800 3150 1800
+Wire Wire Line
+	3000 2200 3150 2200
+Connection ~ 3000 2800
+Entry Wire Line
+	2850 2500 2950 2600
+Wire Bus Line
+	2850 1350 2850 2500
+$Comp
+L XP_CONN_05_M XP1
+U 1 1 5528430B
+P 2400 3100
+F 0 "XP1" H 2650 3400 60  0000 C CNN
+F 1 "PLS-5" H 2750 2800 60  0000 C CNN
+F 2 "" H 2400 3100 60  0000 C CNN
+F 3 "" H 2400 3100 60  0000 C CNN
+	1    2400 3100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3150 3000 2750 3000
+Connection ~ 2750 3000
+Wire Wire Line
+	2400 3200 2750 3200
+Connection ~ 2750 3200
+Wire Wire Line
+	2450 1600 2450 2900
+Wire Wire Line
+	2450 2900 2400 2900
+Wire Wire Line
+	2400 3000 2550 3000
+Wire Wire Line
+	2550 3000 2550 1800
+Wire Wire Line
+	2400 3100 2650 3100
+Wire Wire Line
+	2650 3100 2650 2000
+Text Notes 1800 3350 0    60   ~ 0
+VCC
+Text Notes 1800 3250 0    60   ~ 0
+GND
+Text Notes 1800 3150 0    60   ~ 0
+LATCH
+Text Notes 1800 3050 0    60   ~ 0
+CLOCK
+Text Notes 1800 2950 0    60   ~ 0
+DATA
+$EndSCHEMATC
