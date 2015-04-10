@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/cultures/globalize.cultures.js"></script>
+		<script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.5/js/dx.chartjs.js"></script>
+		<!--script type="text/javascript" src="js/papaparse.min.js"></script-->
+	</head>
+
+		<script type="text/javascript">
+			var sField = 'Timestamp'
+			var tInField = 'TempIn'
+			var tInName = 'Temperature Inside (°C)'
+			var tOutField = 'TempOut'
+			var tOutName = 'Temperature Outside (°C)'
+			var luxField = 'Lightness'
+			var luxName = 'Lightness (Lux)'
+			var pField = 'Pressure'
+			var pName = 'Pressure (hPa)'
+
+			var sMin, sMax, sInit
+
+			var dataSource = new DevExpress.data.DataSource({
+			    load: function (loadOptions) {
+			        var d = $.Deferred();
+			        $.ajax({
+			            url: "http://himura15.dlinkddns.com/weather.json",
+			            data: {limit: 2017},
+			            dataType: "jsonp",
+			            jsonp: "callback",
+			            success: function(data) {
+			            	data = data['weather']
+
+			                var dataSize = data.length - 1
+			                var initCut = Math.round(data.length / 2)
+
+			            	sMin = new Date(data[dataSize][sField]*1000)
+							sInit = new Date(data[initCut][sField]*1000)
+							sMax = new Date(data[0][sField]*1000)
+			                d.resolve(data)
+
+			    			setTimeout(function() {$('#chart').dxChart('instance').zoomArgument(sInit, sMax)}, 0)
+			            }
+			        });
+			        return d.promise();
+			    },
+			    postProcess: function (data) {
+			        for (i in data){
+			            data[i][sField] = new Date(data[i][sField]*1000)
+			        }
+			        return data
+			    }
+			});
+
+
+			$(function () {
+				var series = [
+		        	{argumentField: sField, valueField: tInField, axis: tInField, name: tInName},
+		        	{argumentField: sField, valueField: tOutField, axis: tOutField, name: tOutName},
+		        	{argumentField: sField, valueField: luxField, axis: luxField, name: luxName},
+		        	{argumentField: sField, valueField: pField, axis: pField, name: pName}]
+
+	    		$('#chart').dxChart({
+			        dataSource: dataSource,
+			        series: series,
+			        commonSeriesSettings: {
+			        	type: 'line',
+			        	point: {visible: false}
+			        },
+			        argumentAxis: {
+			        	grid: {visible: true}	
+			        },
+		    	    valueAxis: [
+				        {name: tInField, title: tInField, position: 'left'},
+				        {name: tOutField, title: tOutField, position: 'left'},
+				        {name: luxField, title: luxField, position: 'right'},
+				        {name: pField, title: pName, position: 'right', constantLines: [{value: 1013.25, label: {text: 'Normal atmospheric pressure'}, color:'#BA4D51'}]}
+				    ],
+				    legend: {
+				    	verticalAlignment: 'bottom',
+				    	horizontalAlignment: 'center',
+				    	itemTextPosition: 'right'
+				    },
+				    tooltip: {
+				    	enabled: true
+				    },
+				    zoomingMode: 'all',
+				    scrollingMode: 'all',
+				    useAggregation: true
+			    })
+			    $('#chart').dxChart('instance').showLoadingIndicator()
+
+			});
+
+		</script>
+
+	<body>
+		<div id="chart" style="height: 90%" ></div>
+	</body>
+</html>
