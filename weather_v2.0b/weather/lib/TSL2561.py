@@ -70,21 +70,23 @@ class TSL2561:
         return float({ 0: 13.7, 1: 101, 2: 402 }[self.tInt])
     
     def wait(self):
-        sleep(self.tInt_ms()/1000)
+        if self.debug: print("Waiting %dms..." % self.tInt_ms())
+        sleep((self.tInt_ms()+10)/1000)
     
     def on(self):
         self.i2c.write8(self.TSL2561_CMD | self.TSL2561_REG_CONTROL, 0x03)
-        
+        if self.debug: print("Power ON")
+
     def off(self):
         self.i2c.write8(self.TSL2561_CMD | self.TSL2561_REG_CONTROL, 0x00)
-        
+        if self.debug: print("Power OFF")
+
     def getData(self):
+        self.wait()
         CH0 = self.i2c.readU16(self.TSL2561_CMD | self.TSL2561_REG_DATA_0)  # Visible + IR
         CH1 = self.i2c.readU16(self.TSL2561_CMD | self.TSL2561_REG_DATA_1)  # Visible only
         if self.debug: print "Sensor returned: %#x %#x" % (CH0, CH1)
-        if (CH0 and CH1):
-            return CH0, CH1
-        return False
+        return CH0, CH1
 
     def getLux(self, data):
         if data[0] == 0xFFFF: return "Staturation"
@@ -93,6 +95,7 @@ class TSL2561:
         CH0 = float(data[0]) # Visible + IR
         CH1 = float(data[1]) # Visible only
 
+        if CH0 == 0: return 0
         ratio = CH1 / CH0
         
         CH0 *= 402.0 / self.tInt_ms()
