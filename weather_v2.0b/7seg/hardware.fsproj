@@ -10,7 +10,7 @@
 	<Document>
 		<LocalLibrary />
 		<Pcb>
-			<File path=".\hardware.fsx" Folder="-1" isopened="0"/>
+			<File path=".\hardware.fsx" Folder="-1" isopened="1"/>
 		</Pcb>
 		<Import>
 			<Specctra>
@@ -18,8 +18,8 @@
 			</Specctra>
 		</Import>
 		<ARouteSessions>
-			<Session name="hardware" date="2015-04-11 01:34:27" path=".\autoroute_hardware_150411013427\">
-			<File path=".\autoroute_hardware_150411013427\hardware_1162-12sa.fsb" Folder="-1" isopened="0"/>
+			<Session name="hardware" date="2015-04-11 14:23:58" path=".\autoroute_hardware_150411142358\">
+			<File path=".\autoroute_hardware_150411142358\hardware_1053-18s.fsb" Folder="-1" isopened="0"/>
 			</Session>
 		</ARouteSessions>
 	</Document>
