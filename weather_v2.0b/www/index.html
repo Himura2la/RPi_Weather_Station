@@ -36,20 +36,19 @@
 			            jsonp: "callback",
 			            success: function(data) {
 			                //Data is loaded!!!
-
+                            
 			                if (data['weather'].length < dataSize) {
-			                	dataSize = data['weather'].length - 1
+			                	dataSize = data['weather'].length
 			                	initCut = Math.round(data['weather'].length / 2)
 			                }
 
-			            	sMin = new Date(data['weather'][dataSize][sField]*1000)
-							sInit = new Date(data['weather'][initCut][sField]*1000)
+			            	sMin = new Date(data['weather'][dataSize - 1][sField]*1000)
+							sInit = new Date(data['weather'][dataSize - initCut][sField]*1000)
 							sMax = new Date(data['weather'][0][sField]*1000)
-							mainChart.dxChart('instance').zoomArgument(sInit, sMax)
 
-			                //addGauges(data['weather'][0])
-							//addRangeSelector()
+							addRangeSelector()
 			                d.resolve(data)
+			    			setTimeout(function() {mainChart.dxChart('instance').zoomArgument(sInit, sMax)}, 10)
 			            }
 			        });
 			        return d.promise();
@@ -65,113 +64,12 @@
 
 
 			$(function () {
-			    tGauge = $('<div style="width: 20%; float: left;" />').appendTo('#dashboard')
-				//mainChart = $('<div id="chart" style="width: 60%; float: left;" />').appendTo('#dashboard')
-				hGauge = $('<div style="width: 20%; float: left;" />').appendTo('#dashboard')
+				mainChart = $('<div id="chart" style="height: 70%;"" />').appendTo('#dashboard')
 				rangeSelector = $('<div style="clear:both;" />').appendTo('#dashboard')
-
-
-				mainChart = $('<div id="chart" style="height: 90%;"" />').appendTo('#dashboard')
-
 				drawChart()
 			})
 
-			
-/*			function fetchLimits(){
-				$.getJSON( "/discrete_weather.json?n=1," + dataSize + "," + (dataSize-initCut), function(data) {
-					addGauges(data['weather'][0])
 
-					sMin = new Date(data['weather'][1][sField]*1000)
-					sInit = new Date(data['weather'][2][sField]*1000)
-					sMax = new Date(data['weather'][0][sField]*1000)
-
-					addRangeSelector()
-					drawChart()
-
-					setTimeout(loadData, 800);
-
-				}).fail(function(jqxhr, textStatus, error) {
-				    console.log( "Data request Failed: " + textStatus + ", " + error );
-				})
-			}
-			function loadData(){
-				dataSource.load().done(function(result) { 
-					mainChart.dxChart('instance').option("dataSource", dataSource)
-					mainChart.dxChart('instance').hideLoadingIndicator()
-					mainChart.dxChart('instance').endUpdate()
-					mainChart.dxChart('instance').zoomArgument(sInit, sMax)
-				})
-			}*/
-
-			function addGauges(data){
-				tGauge.dxCircularGauge({
-					value: data[tOutField],
-					scale: {
-			            startValue: -20,
-			            endValue: 30,
-			            majorTick: {
-			                color: 'black',
-			                tickInterval: 5
-			            },
-			            minorTick: {
-			                visible: true,
-			                color: 'black',
-			                tickInterval: 1
-			            },
-			        },
-			        rangeContainer:{
-			            ranges: [
-			                { startValue: -20, endValue: -5, color: 'blue' },
-			                { startValue: -5, endValue: 15, color: 'yellow' },
-			                { startValue: 15, endValue: 30, color: 'orange' }
-			            ],
-           				offset: 5
-			       	},
-			       	valueIndicator: {
-			       		type: 'triangleNeedle',
-			       		width: 10
-			       	},
-			       	title:{
-			       		text: data[tOutField] + ' °C',
-			       		position: 'bottom-center'
-			       	}
-			    });
-
-			    hGauge.dxCircularGauge({
-					value: data[pField],
-					subvalues: [1013.25],
-					scale: {
-			            startValue: 963.25,
-			            endValue: 1063.25,
-			            majorTick: {
-			                color: 'black',
-			                tickInterval: 5
-			            },
-			            minorTick: {
-			                visible: true,
-			                color: 'black',
-			                tickInterval: 2
-			            },
-			       	},
-			       	rangeContainer:{
-			            ranges: [
-			                { startValue: 963.25, endValue: 1013.24, color: 'blue' },
-			                { startValue: 1013.26, endValue: 1063.25, color: 'red' }
-			            ],
-			            offset: 5
-			       	},
-			       	title:{
-			       		text: data[pField] + ' hPa',
-			       		position: 'bottom-center'
-			       	},
-			       	valueIndicator: {
-			       		type: 'triangleNeedle',
-			       		width: 10
-			       	}
-			    })
-			}
-			
-			
 			function drawChart(){
 				var series = [
 		        	{argumentField: sField, valueField: tInField, axis: tInField, name: tInName},
@@ -190,9 +88,9 @@
 			        	grid: {visible: true}	
 			        },
 		    	    valueAxis: [
-				        {name: tInField, title: tInField, position: 'left'},
-				        {name: tOutField, title: tOutField, position: 'left'},
-				        {name: luxField, title: luxField, position: 'right'},
+				        {name: tInField, title: tInName, position: 'left'},
+				        {name: tOutField, title: tOutName, position: 'left'},
+				        {name: luxField, title: luxName, position: 'right'/*, type:'logarithmic'*/},
 				        {name: pField, title: pName, position: 'right', constantLines: [{value: 1013.25, label: {text: 'Normal atmospheric pressure'}, color:'#BA4D51'}]}
 				    ],
 				    legend: {
@@ -205,12 +103,14 @@
 				    },
 				    zoomingMode: 'all',
 				    scrollingMode: 'all',
-				    useAggregation: true
+				    useAggregation: true,
+                    onLegendClick: function(e){
+                        if (e.target.isVisible()) e.target.hide()
+                        else e.target.show()
+                    }
 			    })
 			    mainChart.dxChart('instance').showLoadingIndicator()
 			}
-			
-
 			
 			function addRangeSelector(){
 				rangeSelector.dxRangeSelector({
@@ -241,11 +141,12 @@
 	<body>
 		<div id="dashboard"></div>
 		<p>WTF, give me pure data:
-		<a href='himura_weather.csv?limit=576'>CSV</a>, 
-		<a href='himura_weather.csv?limit=576&mode=excel&time=friendly'>Excel</a>, 
-		<a href='himura_weather.json?limit=576'>JSON</a>,
-		<a href='himura_weather.php?limit=144'>HTML</a>
+		<!--a href='weather.csv?limit=576'>CSV</a>, 
+		<a href='weather.csv?limit=576&mode=excel&time=friendly'>Excel</a-->, 
+		<a href='weather.json?limit=576'>JSON</a>,
+		<a href='weather.php?limit=144'>HTML</a>
 		</p>
-		<pre>$mysql --host=himura15.dlinkddns.com --user=user --password=user himura_weather</pre>
+		<pre>$mysql --host=himura15.dlinkddns.com --user=user --password=user weather2</pre>
+        <p><strong>NOTE:</strong> The luxmeter is covered with a tracing paper that reduces the flux a little bit because the sensor is exposed with straight sunlight in a period of time. </p>
 	</body>
 </html>

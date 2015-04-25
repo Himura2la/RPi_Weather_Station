@@ -1,4 +1,4 @@
-﻿import time
+import time
 import pymysql
 from lib import BMP085
 from lib import TSL2561
@@ -37,7 +37,7 @@ if type(light) != type(float()):
 lux.off()
 
 
-db = pymysql.connect(    host='localhost',
+db = pymysql.connect(   host='localhost',
                         port=3306,
                         user='',
                         passwd='',
