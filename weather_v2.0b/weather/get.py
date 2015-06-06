@@ -17,10 +17,27 @@ altitude = bmp.readAltitude()
 temp = thermometer.get_temperature()
 
 light = None
-if (lux.configure(gain=1)):
-    data = lux.getData()
-    if (data):
-        light = lux.getLux(data)
+
+lux.configure(gain=1)
+light = lux.getLux(lux.getData())   # Try with gain
+
+if type(light) != type(float()):
+    lux.off()
+    lux.configure()
+    light = lux.getLux(lux.getData())   # Try without gain
+    
+    if type(light) != type(float()):
+        lux.off()
+        lux.configure(tInt=1)
+        light = lux.getLux(lux.getData())   # Try 101ms
+        
+        if type(light) != type(float()):
+            lux.off()
+            lux.configure(tInt=0)
+            light = lux.getLux(lux.getData())   # Try 14ms
+            
+            if type(light) != type(float()):    # Give up. Too much light
+                light = 65535
 lux.off()
 
 #datetime = str(datetime.datetime.now()).split(".")[0]
