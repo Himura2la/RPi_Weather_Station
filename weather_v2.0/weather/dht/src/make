@@ -1,0 +1,2 @@
+cd ~/weather/dht/src 
+gcc -std=gnu99 -lrt -o ../test common_dht_read.c pi_mmio.c pi_dht_read.c main.c

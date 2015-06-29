@@ -1,0 +1,56 @@
+<?php 
+
+$mysqli = new mysqli('localhost', 'user', 'user');
+if ($mysqli->connect_errno) {
+    echo "Не удалось подключиться: " + $mysqli->connect_error;
+    exit();
+}
+$mysqli->select_db("weather2");
+$query = "SELECT UNIX_TIMESTAMP(Timestamp), TempOut, TempIn, TempAtt, Pressure, Humidity, Lightness FROM tttphl ORDER BY Timestamp DESC";
+
+if (isset($_GET['limit'])){
+	$query .= " LIMIT ?";
+	$stmt = $mysqli->prepare($query);
+	$stmt->bind_param("d", $_GET['limit']);
+}
+else {
+	$stmt = $mysqli->prepare($query);
+}
+
+$JSONP = (isset($_GET['callback']) || isset($_GET['jsonp']));
+if ($JSONP) header("Content-Type: application/javascript");
+else header("Content-Type: application/json");
+
+if (isset($_GET['jsonp'])) echo $_GET['jsonp'] . "(";
+if (isset($_GET['callback'])) echo $_GET['callback'] . "(";
+
+if ($stmt->execute()) {
+	$stmt->bind_result($Timestamp, $TempOut, $TempIn, $TempAtt, $Pressure, $Humidity, $Lightness);
+	echo "{\"weather\": [";
+	$first_elem = true;
+	
+	while($stmt->fetch()){
+		if (!$first_elem) echo ",";
+		else $first_elem = false;
+		echo "{\n";
+		echo "\"Timestamp\": ". $Timestamp . ",\n";
+		echo "\"TempOut\": " . number_format($TempOut, 2, '.', '') . ",\n";
+		echo "\"TempIn\": " . number_format($TempIn, 1, '.', '') . ",\n";
+		echo "\"TempAtt\": " . number_format($TempAtt, 1, '.', '') . ",\n";
+		echo "\"Pressure\": " . number_format($Pressure, 2, '.', '') . ",\n";
+		echo "\"Humidity\": " . number_format($Humidity, 1, '.', '') . ",\n";
+		echo "\"Lightness\": " . number_format($Lightness, 3, '.', '') . "\n";
+		echo "}";
+	}
+	echo "]}";
+    $stmt->close();
+    
+    if ($JSONP) echo ");";
+}
+else{
+	echo $mysqli->error;
+}
+
+$mysqli->close();
+
+?>

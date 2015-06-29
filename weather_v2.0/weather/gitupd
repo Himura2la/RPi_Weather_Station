@@ -1,0 +1,2 @@
+cp /home/pi/weather /git/RPi_Weather_Station/weather_v2.0 -r
+cp /var/www /git/RPi_Weather_Station/weather_v2.0 -r
