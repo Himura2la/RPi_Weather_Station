@@ -6,19 +6,28 @@
 		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
 		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/cultures/globalize.cultures.js"></script>
 		<script type="text/javascript" src="http://cdn3.devexpress.com/jslib/15.1.3/js/dx.chartjs.js"></script>
-		<!--script type="text/javascript" src="js/papaparse.min.js"></script-->
 	</head>
 
 		<script type="text/javascript">
 			var sField = 'Timestamp'
+            
 			var tInField = 'TempIn'
 			var tInName = 'Temperature Inside (°C)'
+            
+			var tAttField = 'TempAtt'
+			var tAttName = 'Temperature at the Attic (°C)'
+            
 			var tOutField = 'TempOut'
 			var tOutName = 'Temperature Outside (°C)'
+            
 			var luxField = 'Lightness'
 			var luxName = 'Lightness (Lux)'
+            
 			var pField = 'Pressure'
 			var pName = 'Pressure (hPa)'
+            
+			var hField = 'Humidity'
+			var hName = 'Humidity (%)'
 
 			var dataSize = 2017
 			var initCut = 1440
@@ -74,9 +83,11 @@
 			function drawChart(){
 				var series = [
 		        	{argumentField: sField, valueField: tInField, axis: tInField, name: tInName},
+		        	{argumentField: sField, valueField: tAttField, axis: tAttField, name: tAttName},
 		        	{argumentField: sField, valueField: tOutField, axis: tOutField, name: tOutName},
-		        	{argumentField: sField, valueField: luxField, axis: luxField, name: luxName},
-		        	{argumentField: sField, valueField: pField, axis: pField, name: pName}
+		        	//{argumentField: sField, valueField: luxField, axis: luxField, name: luxName},
+		        	{argumentField: sField, valueField: pField, axis: pField, name: pName},
+		        	{argumentField: sField, valueField: hField, axis: hField, name: hName}
                 ]
 	    		mainChart.dxChart({
 			        dataSource: dataSource,
@@ -89,10 +100,12 @@
 			        	grid: {visible: true}	
 			        },
 		    	    valueAxis: [
-				        {name: tInField, title: tInName, position: 'left'},
-				        {name: tOutField, title: tOutName, position: 'left'},
-				        {name: luxField, title: luxName, position: 'right'/*, type:'logarithmic'*/},
-				        {name: pField, title: pName, position: 'right', constantLines: [{value: 987.4544, label: {text: 'Normal atmospheric pressure'}, color:'#BA4D51'}]} //223 m; 23 degC; 101325 Pa at sea level
+				        {name: tInField, title: tInName, position: 'right'},
+				        {name: tAttField, title: tAttName, position: 'right'},
+				        {name: tOutField, title: tOutName, position: 'right'},
+				        //{name: luxField, title: luxName, position: 'right'/*, type:'logarithmic'*/},
+				        {name: pField, title: pName, position: 'left', constantLines: [{value: 987.4544, label: {text: 'Normal atmospheric pressure'}, color:'#BA4D51'}]}, //223 m; 23 degC; 101325 Pa at sea level
+				        {name: hField, title: hName, position: 'left'}
 				    ],
 				    legend: {
 				    	verticalAlignment: 'bottom',
@@ -149,7 +162,8 @@
 		<a href='weather.json?limit=576'>JSON</a>,
 		<a href='weather.php?limit=144'>HTML</a>
 		</p>
-		<pre>$mysql --host=himura15.dlinkddns.com --user=user --password=user weather2</pre>
+		<pre>$mysql --host=himura15.dlinkddns.com --user=user --password=user meteopi</pre>
         <p><strong>NOTE:</strong> The luxmeter is covered with a tracing paper that reduces the flux a little bit, because the sensor is exposed with straight sunlight in a period of time. </p>
-	</body>
+        <p><a href="https://github.com/Himura2la/RPi_Weather_Station">Source code</a></p>
+    </body>
 </html>

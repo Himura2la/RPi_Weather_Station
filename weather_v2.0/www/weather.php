@@ -6,7 +6,7 @@ if ($mysqli->connect_errno) {
     echo "Не удалось подключиться: " + $mysqli->connect_error;
     exit();
 }
-$mysqli->select_db("weather2");
+$mysqli->select_db("meteopi");
 $query = "SELECT * FROM tttphl ORDER BY Timestamp DESC";
 if (isset($_GET['limit'])){
 	$query .= " LIMIT ?";
