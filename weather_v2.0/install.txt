@@ -1,0 +1,43 @@
+sudo apt-get install python-smbus i2c-tools
+
+git clone https://github.com/timofurrer/w1thermsensor.git && cd w1thermsensor
+sudo python setup.py install
+cd ..
+
+sudo apt-get install build-essential python-dev
+git clone https://github.com/Himura2la/Adafruit_Python_DHT && cd Adafruit_Python_DHT
+sudo python setup.py install
+cd ..
+
+echo i2c-dev >> /etc/modules
+
+sudo apt-get install mysql-server python-mysqldb
+
+sudo nano /etc/mysql/my.cnf
+#bind-address           = 127.0.0.1
+
+mysql -uroot -p
+mysql> use mysql;
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' with grant option IDENTIFIED BY 'my-good-password';
+mysql> flush privileges;
+mysql> exit
+sudo service mysql restart
+
+sudo apt-get install python-pip
+sudo pip install PyMySQL
+
+sudo crontab -e
+#*/15 * * * * python /home/pi/w/dump_db.py
+
+sudo apt-get install lighttpd php5-cgi php5-mysql
+sudo lighty-enable-mod fastcgi 
+sudo lighty-enable-mod fastcgi-php
+sudo service lighttpd force-reload
+
+sudo nano /etc/lighttpd/lighttpd.conf
+sudo nano /etc/lighttpd/conf-enabled/15-fastcgi-php.conf
+#fastcgi.map-extensions = ( ".json" => ".php" )
+sudo service lighttpd force-reload
+
+sudo nano /etc/php5/cgi/php.ini
+#display_errors = On
