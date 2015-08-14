@@ -1,18 +1,21 @@
+# For more options and information see 
+# http://www.raspberrypi.org/documentation/configuration/config-txt.md
+# Some settings may impact device functionality. See link above for details
+
 # uncomment if you get no picture on HDMI for a default "safe" mode
 #hdmi_safe=1
 
 # uncomment this if your display has a black border of unused pixels visible
 # and your display can output without overscan
-disable_overscan=0
+#disable_overscan=1
 
 # uncomment the following to adjust overscan. Use positive numbers if console
 # goes off screen, and negative if there is too much border
-
-# Font = TerminusBold 14x28 (sudo dpkg-reconfigure console-setup)
-overscan_left=-20
-overscan_right=-18
+overscan_left=-21
+overscan_right=-15
 overscan_top=-23
-overscan_bottom=-23
+overscan_bottom=-26
+# Font = TerminusBold 14x28 (sudo dpkg-reconfigure console-setup)
 
 # uncomment to force a console size. By default it will be display's size minus
 # overscan.
@@ -38,9 +41,8 @@ overscan_bottom=-23
 #sdtv_mode=2
 
 #uncomment to overclock the arm. 700 MHz is the default.
-arm_freq=950
+#arm_freq=800
 
-# for more options see http://elinux.org/RPi_config.txt
-core_freq=250
-sdram_freq=450
-over_voltage=6
+dtparam=i2c_arm=on
+dtoverlay=w1-gpio,gpiopin=22
+dtparam=spi=on
