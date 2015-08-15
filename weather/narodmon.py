@@ -24,7 +24,7 @@ weather['P1'] = bmp.readPressure() / 100.0
 weather['L1'] = lux.getAnyLux()
 weather['H1'], weather['T2'] = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 23)
 
-Popen(['python','/home/pi/w/7seg.py', str(int(round(weather['T0'])))])
+Popen(['python','7seg.py', str(int(round(weather['T0'])))])
 
 sock = socket.socket()
 sock.connect(('narodmon.ru', 8283))
