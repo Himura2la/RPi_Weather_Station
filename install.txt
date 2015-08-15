@@ -1,15 +1,20 @@
-sudo apt-get install python-smbus i2c-tools
+sudo apt-get install python-smbus i2c-tools build-essential python-dev
+echo i2c-dev >> /etc/modules
+
 
 git clone https://github.com/timofurrer/w1thermsensor.git && cd w1thermsensor
 sudo python setup.py install
 cd ..
-
-sudo apt-get install build-essential python-dev
 git clone https://github.com/Himura2la/Adafruit_Python_DHT && cd Adafruit_Python_DHT
 sudo python setup.py install
 cd ..
+git clone https://github.com/Himura2la/RPi_Weather_Station
 
-echo i2c-dev >> /etc/modules
+#test
+
+sudo crontab -e
+#*/5 * * * * python /git/RPi_Weather_Station/weather/narodmon.py
+
 
 sudo apt-get install mysql-server python-mysqldb
 
