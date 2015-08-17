@@ -15,7 +15,7 @@ overscan_left=-21
 overscan_right=-15
 overscan_top=-23
 overscan_bottom=-26
-# Font = TerminusBold 14x20 (sudo dpkg-reconfigure console-setup)
+# Font = TerminusBold 14x28 (sudo dpkg-reconfigure console-setup)
 
 # uncomment to force a console size. By default it will be display's size minus
 # overscan.
