@@ -1,5 +1,5 @@
-sudo apt-get install python-smbus i2c-tools build-essential python-dev
-echo i2c-dev >> /etc/modules
+sudo apt-get install python-smbus i2c-tools python-dev
+#echo i2c-dev >> /etc/modules
 
 
 git clone https://github.com/timofurrer/w1thermsensor.git && cd w1thermsensor
