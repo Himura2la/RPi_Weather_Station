@@ -1,9 +1,10 @@
 # Raspberry Pi Weather Station
 The online weather station based on Raspberry Pi
 
-##Version 2.0
-Is currently under development.
+## Version 2.0
+
 It includes three sensors.
+
 * DS18B20 - to monitor temperature outside
 * BMP085 - to monitor atmospheric pressure and temperature once again (it can be put to another place)
 * TSL2561 - to monitor the lightness. Nobody measures the lightness! I'll be the first! Why not?
